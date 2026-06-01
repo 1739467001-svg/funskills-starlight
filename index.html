@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>繁星之夜 · FunSkills 决赛星河长廊</title>
+<meta name="description" content="繁星之夜 · FunSkills 决赛之夜，41 位入围者的 Skill 作品星河长廊。" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<!-- 星空画布 -->
+<canvas id="starfield"></canvas>
+<div class="nebula nebula-a"></div>
+<div class="nebula nebula-b"></div>
+<div class="nebula nebula-c"></div>
+<div class="grain"></div>
+
+<!-- 导航 -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top">
+    <span class="brand-mark">✦</span>
+    <span class="brand-text">繁星之夜<small>FunSkills</small></span>
+  </a>
+  <nav class="nav-links">
+    <a href="#gallery">星河长廊</a>
+    <a href="#constellation">星座图谱</a>
+    <a href="#about">关于</a>
+  </nav>
+</header>
+
+<!-- 首屏 -->
+<section class="hero" id="top">
+  <div class="hero-rings"><span></span><span></span><span></span></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">✧ STARLIGHT NIGHT · 繁星点灯 ✧</p>
+    <h1 class="hero-title">繁星之夜</h1>
+    <p class="hero-sub">FunSkills 决赛之夜 · 决赛作品星河长廊</p>
+    <p class="hero-desc">每一个 Skill，都是一颗被点亮的星。<br/>今夜，让繁星之光，汇成同一片星河。</p>
+    <div class="hero-stats" id="heroStats">
+      <div class="stat"><b data-count="37">0</b><span>SKILLS</span></div>
+      <div class="stat"><b data-count="41">0</b><span>FINALISTS</span></div>
+      <div class="stat"><b data-count="5">0</b><span>赛道星座</span></div>
+      <div class="stat"><b data-inf="1">∞</b><span>POSSIBILITY</span></div>
+    </div>
+    <a class="hero-cta" href="#gallery">进入星河 <span>↓</span></a>
+  </div>
+  <div class="scroll-cue"><span></span></div>
+</section>
+
+<!-- 星河长廊 轮播 -->
+<section class="gallery" id="gallery">
+  <div class="section-head">
+    <p class="kicker">✦ THE GALAXY ✦</p>
+    <h2>星河长廊</h2>
+    <p class="lead" id="galleryLead">滑动、拖拽，或静待星河自转——逐一点亮决赛作品。</p>
+  </div>
+
+  <div class="coverflow" id="coverflow">
+    <div class="cf-stage" id="cfStage"></div>
+    <button class="cf-btn cf-prev" id="cfPrev" aria-label="上一个">‹</button>
+    <button class="cf-btn cf-next" id="cfNext" aria-label="下一个">›</button>
+  </div>
+  <div class="cf-meta" id="cfMeta">
+    <div class="cf-track-tag" id="cfTrack"></div>
+    <h3 id="cfTitle"></h3>
+    <p class="cf-en" id="cfEn"></p>
+    <p class="cf-tagline" id="cfTagline"></p>
+    <div class="cf-author" id="cfAuthor"></div>
+  </div>
+  <div class="cf-dots" id="cfDots"></div>
+</section>
+
+<!-- 星座图谱 网格 -->
+<section class="constellation" id="constellation">
+  <div class="section-head">
+    <p class="kicker">✦ THE CONSTELLATIONS ✦</p>
+    <h2>星座图谱</h2>
+    <p class="lead">5 条赛道，5 座星座。点亮任意一颗星，看见它背后的故事。</p>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="star-grid" id="starGrid"></div>
+</section>
+
+<!-- 关于 -->
+<section class="about" id="about">
+  <div class="about-card">
+    <p class="kicker">✦ ABOUT ✦</p>
+    <h2>关于这片星河</h2>
+    <p>「繁星之夜」是 <b>繁星计划 · FunSkills 大赛</b> 全国总决赛的作品展。从电商出海到金融投资，从效率工具到内容创作与生活成长——每一位入围者都用一个 Skill，回答了同一个问题：<i>当人人都能创造能力，世界会变成什么样？</i></p>
+    <p>这里收录了进入决赛的 Skill 作品。它们大小不一、亮度各异，却共享同一片夜空。愿每一束星光，都被看见。</p>
+    <p class="about-sign">✦ 一星一世界，都值得被点亮 ✦</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <p class="foot-logo">繁星之夜 · FunSkills</p>
+  <p class="foot-sub">STARLIGHT NIGHT · 决赛作品星河长廊 · 2026</p>
+</footer>
+
+<!-- 灯箱 -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lb-backdrop" id="lbBackdrop"></div>
+  <button class="lb-close" id="lbClose" aria-label="关闭">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="上一个">‹</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="下一个">›</button>
+  <div class="lb-content">
+    <div class="lb-figure"><img id="lbImg" alt="" /></div>
+    <div class="lb-info">
+      <div class="lb-track" id="lbTrack"></div>
+      <h3 id="lbTitle"></h3>
+      <p class="lb-en" id="lbEn"></p>
+      <p class="lb-tagline" id="lbTagline"></p>
+      <p class="lb-blurb" id="lbBlurb"></p>
+      <div class="lb-tags" id="lbTags"></div>
+      <div class="lb-author" id="lbAuthor"></div>
+      <div class="lb-index" id="lbIndex"></div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
