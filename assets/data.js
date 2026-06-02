@@ -53,7 +53,7 @@ window.WORKS = [
     tagline:"融资不是碰运气，而是系统化能力", wechat:"wx130910800", tags:["创业","融资"],
     blurb:"下载用户突破 1000+：融资诊断、提升 Capital EQ、融资策略、投资人匹配，加速每一位创始人的融资进程。" },
 
-  { slug:"cbed", title:"CBED 可转债量化优选", en:"Convertible Bond Evaluation & Discovery", author:"王印国", track:"金融投资",
+  { slug:"cbed", title:"CBED 可转债量化优选", en:"Convertible Bond Evaluation & Discovery", author:"王印国", wechat:"wangyinguoweixin", track:"金融投资",
     tagline:"把量化能力交给每一位投资者", tags:["可转债","量化"],
     blurb:"多维度筛选与实时监测可转债，可转债智能优选技能，让稳健的量化策略走进普通投资者的工具箱。" },
 
@@ -66,7 +66,7 @@ window.WORKS = [
     blurb:"单人 OPC：40+ 生产级模块、5-10x 引擎提速、0ms DataStore、五级实时风控，面向高波动市场的量化 AI 助手。",
     qr:"assets/qr/web3quant.png", qrTitle:"群聊：【智量奇点】AICQ Lab", qrNote:"扫码加入社群交流 · 二维码 6 月 9 日前有效" },
 
-  { slug:"finance-arena", title:"金融 AI 擂台", en:"智能算法对决 · 金融未来挑战", author:"于鸿伟", track:"金融投资",
+  { slug:"finance-arena", title:"金融 AI 擂台", en:"智能算法对决 · 金融未来挑战", author:"于鸿伟", wechat:"ladefr12345", track:"金融投资",
     tagline:"让算法在擂台上一较高下", tags:["金融","赛事"],
     blurb:"智能算法对决的金融科技舞台，把策略与模型放上擂台，见证 AI 重塑金融决策的未来。" },
 
@@ -99,7 +99,7 @@ window.WORKS = [
     blurb:"看清楚、测一下、下一步——多通道验证想法、给方向与行动建议，26 个 AI Skills 陪你跑通创业第一步。" },
 
   { slug:"info-alchemist", title:"信息炼金术士", en:"Info-Alchemist", author:null, track:"效率工具",
-    tagline:"让搜索从“找资料”变成“判断下一步”", tags:["搜索","决策","效率"],
+    tagline:"让搜索从“找资料”变成“判断下一步”", wechat:"shanhu52", tags:["搜索","决策","效率"],
     blurb:"明确搜索目的，把官网、新闻、小红书、X、Reddit 等信息炼成你的下一步行动：继续做、观察、小范围验证或放弃。" },
 
   { slug:"ledger", title:"银砚 · 一句话记账", en:"账本留在本地", author:"冥羽", wechat:"zycXMYH", track:"效率工具",
@@ -109,7 +109,7 @@ window.WORKS = [
     qr:"assets/qr/ledger.png", qrTitle:"群聊：零感无限-ZeroX 种子用户群", qrNote:"扫码加入社群 · 二维码 6 月 7 日前有效" },
 
   { slug:"hammer-notes", title:"锤子便签 && GARSS 阅读器", en:"不要因为走得太远，就忘了为什么出发", author:null, track:"效率工具",
-    tagline:"致敬经典的便签与阅读体验", tags:["工具","内容","阅读"],
+    tagline:"致敬经典的便签与阅读体验", wechat:"jianzhao111", tags:["工具","内容","阅读"],
     blurb:"把经典的锤子便签书写与 GARSS 阅读体验，用 AI Skill 的方式重新带回到你的日常工作流。" },
 
   { slug:"xhs-auto", title:"Obsidian x 小红书", en:"一键搜索 · 自动创作 · 全自动发布", author:"春头勇", track:"内容创作",
@@ -132,7 +132,7 @@ window.WORKS = [
     tagline:"提炼可复用的人生方法论", tags:["方法论","成长"],
     blurb:"基于 AI 时代的洞察，把零散经验提炼成可复用、可执行的人生方法论技能库。" },
 
-  { slug:"takeback", title:"Takeback · 知返", en:"AI 学习人类，人类蒸馏 AI", author:"麦叶", track:"生活成长",
+  { slug:"takeback", title:"Takeback · 知返", en:"AI 学习人类，人类蒸馏 AI", author:"麦叶", wechat:"wv012138", track:"生活成长",
     tagline:"AI 时代下的新学习范式", tags:["学习","教育"],
     blurb:"AI 学习人类、人类蒸馏 AI——用全新的学习范式，重塑 AI 时代下的教育与学习方式。" },
 
