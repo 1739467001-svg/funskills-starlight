@@ -210,7 +210,7 @@
   /* ---------- 灯箱 ---------- */
   const lb=$("#lightbox"),lbImg=$("#lbImg"),lbTrack=$("#lbTrack"),lbTitle=$("#lbTitle"),
         lbEn=$("#lbEn"),lbTag=$("#lbTagline"),lbBlurb=$("#lbBlurb"),lbTags=$("#lbTags"),
-        lbAuthor=$("#lbAuthor"),lbIndex=$("#lbIndex"),lbQr=$("#lbQr"),lbHighlight=$("#lbHighlight");
+        lbAuthor=$("#lbAuthor"),lbIndex=$("#lbIndex"),lbQr=$("#lbQr"),lbHighlight=$("#lbHighlight"),lbWechat=$("#lbWechat");
   let lbI=0;
   function openLB(i){ lbI=i; renderLB(); lb.classList.add("open"); lb.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; stop(); }
   function closeLB(){ lb.classList.remove("open"); lb.setAttribute("aria-hidden","true"); document.body.style.overflow=""; play(); }
@@ -223,6 +223,11 @@
     lbTag.textContent="“"+wk.tagline+"”"; lbBlurb.textContent=wk.blurb;
     lbTags.innerHTML=wk.tags.map(t=>`<span>#${t}</span>`).join("");
     lbAuthor.innerHTML=wk.author?`参赛选手 · <b>${wk.author}</b>`:`繁星之夜 · 决赛入围作品`;
+    if(wk.wechat){
+      lbWechat.style.display="flex";
+      lbWechat.innerHTML=`<span class="wx-ico">✦</span><span class="wx-label">选手微信</span>`+
+        `<span class="wx-id">${wk.wechat}</span><button class="wx-copy" data-wx="${wk.wechat}">复制</button>`;
+    } else { lbWechat.style.display="none"; lbWechat.innerHTML=""; }
     lbIndex.textContent=String(lbI+1).padStart(2,"0")+" / "+String(N).padStart(2,"0");
     if(wk.highlight){ lbHighlight.style.display="block"; lbHighlight.textContent=wk.highlight; }
     else { lbHighlight.style.display="none"; lbHighlight.textContent=""; }
@@ -241,6 +246,15 @@
   $("#lbBackdrop").addEventListener("click",closeLB);
   $("#lbNext").addEventListener("click",lbNext);
   $("#lbPrev").addEventListener("click",lbPrev);
+  lbWechat.addEventListener("click",e=>{
+    const btn=e.target.closest(".wx-copy"); if(!btn) return;
+    const id=btn.dataset.wx;
+    const done=()=>{ const o=btn.textContent; btn.textContent="已复制 ✓"; setTimeout(()=>btn.textContent=o,1500); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(id).then(done).catch(()=>fallbackCopy(id,done)); }
+    else fallbackCopy(id,done);
+  });
+  function fallbackCopy(t,cb){ const ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";
+    document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(_){ } document.body.removeChild(ta); cb&&cb(); }
   addEventListener("keydown",e=>{
     if(!lb.classList.contains("open"))return;
     if(e.key==="Escape")closeLB();
