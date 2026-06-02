@@ -206,7 +206,7 @@
   /* ---------- 灯箱 ---------- */
   const lb=$("#lightbox"),lbImg=$("#lbImg"),lbTrack=$("#lbTrack"),lbTitle=$("#lbTitle"),
         lbEn=$("#lbEn"),lbTag=$("#lbTagline"),lbBlurb=$("#lbBlurb"),lbTags=$("#lbTags"),
-        lbAuthor=$("#lbAuthor"),lbIndex=$("#lbIndex"),lbQr=$("#lbQr");
+        lbAuthor=$("#lbAuthor"),lbIndex=$("#lbIndex"),lbQr=$("#lbQr"),lbHighlight=$("#lbHighlight");
   let lbI=0;
   function openLB(i){ lbI=i; renderLB(); lb.classList.add("open"); lb.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; stop(); }
   function closeLB(){ lb.classList.remove("open"); lb.setAttribute("aria-hidden","true"); document.body.style.overflow=""; play(); }
@@ -220,6 +220,9 @@
     lbTags.innerHTML=wk.tags.map(t=>`<span>#${t}</span>`).join("");
     lbAuthor.innerHTML=wk.author?`参赛选手 · <b>${wk.author}</b>`:`繁星之夜 · 决赛入围作品`;
     lbIndex.textContent=String(lbI+1).padStart(2,"0")+" / "+String(N).padStart(2,"0");
+    if(wk.highlight){ lbHighlight.style.display="block"; lbHighlight.textContent=wk.highlight; }
+    else { lbHighlight.style.display="none"; lbHighlight.textContent=""; }
+    loadEngage(wk.slug);
     if(wk.qr){
       lbQr.style.display="block";
       lbQr.innerHTML=`<div class="lb-qr-card">
@@ -240,4 +243,67 @@
     if(e.key==="ArrowRight")lbNext();
     if(e.key==="ArrowLeft")lbPrev();
   });
+
+  /* ---------- 点赞 / 评论 ---------- */
+  const API = "/api";                 // 同源后端（部署在云服务器 nginx /api 反代）
+  const likeBtn=$("#likeBtn"), likeCount=$("#likeCount"), engName=$("#engName"),
+        cmtText=$("#cmtText"), cmtSend=$("#cmtSend"), cmtList=$("#cmtList"), cmtTip=$("#cmtTip");
+  let engSlug=null, engLiked=false;
+  const NK="fx_name";
+  engName.value = localStorage.getItem(NK) || "";
+  engName.addEventListener("input",()=>{ localStorage.setItem(NK, engName.value.trim()); });
+  const getName=()=>engName.value.trim();
+  function needName(){ engName.classList.add("need"); engName.focus(); setTip("请先填写昵称~",true); setTimeout(()=>engName.classList.remove("need"),500); }
+  function setTip(t,err){ cmtTip.textContent=t||""; cmtTip.classList.toggle("err",!!err); }
+  const esc=s=>{const d=document.createElement("div");d.textContent=s;return d.innerHTML;};
+  function timeStr(ts){ const d=new Date(ts*1000), p=n=>String(n).padStart(2,"0");
+    return `${d.getMonth()+1}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`; }
+
+  function renderEngage(data){
+    likeCount.textContent = data.likes||0;
+    engLiked = !!data.liked;
+    likeBtn.classList.toggle("liked", engLiked);
+    likeBtn.querySelector(".heart").textContent = engLiked ? "♥" : "♡";
+    const cs = data.comments||[];
+    cmtList.innerHTML = cs.length ? cs.map(c=>`<div class="cmt-item">
+        <div class="cmt-head"><span class="cmt-name">${esc(c.name)}</span><span class="cmt-time">${timeStr(c.ts)}</span></div>
+        <div class="cmt-text">${esc(c.text)}</div></div>`).join("")
+      : `<div class="cmt-empty">还没有评论，来做第一个点亮这颗星的人 ✦</div>`;
+  }
+  async function loadEngage(slug){
+    engSlug=slug;
+    likeCount.textContent="·"; cmtList.innerHTML=`<div class="cmt-empty">加载中…</div>`; setTip("");
+    likeBtn.classList.remove("liked"); likeBtn.querySelector(".heart").textContent="♡";
+    try{
+      const u=new URL(API+"/stats", location.href); u.searchParams.set("slug",slug);
+      const nm=getName(); if(nm) u.searchParams.set("name",nm);
+      const r=await fetch(u, {cache:"no-store"}); if(!r.ok) throw 0;
+      const d=await r.json(); if(engSlug!==slug) return; renderEngage(d);
+    }catch(_){ if(engSlug===slug){ likeCount.textContent="0";
+      cmtList.innerHTML=`<div class="cmt-empty">评论功能请在正式展示站点（云服务器/域名）体验</div>`; } }
+  }
+  async function post(path, body){
+    const r=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    if(!r.ok) throw new Error((await r.json().catch(()=>({}))).error||"请求失败"); return r.json();
+  }
+  likeBtn.addEventListener("click",async()=>{
+    if(!getName()) return needName();
+    try{ const d=await post("/like",{slug:engSlug,name:getName()});
+      engLiked=d.liked; likeCount.textContent=d.likes;
+      likeBtn.classList.toggle("liked",d.liked);
+      likeBtn.querySelector(".heart").textContent=d.liked?"♥":"♡";
+      likeBtn.classList.remove("pop"); void likeBtn.offsetWidth; likeBtn.classList.add("pop");
+      setTip(d.liked?"感谢点赞 ✦":"已取消点赞");
+    }catch(e){ setTip("操作失败："+e.message,true); }
+  });
+  async function sendComment(){
+    if(!getName()) return needName();
+    const t=cmtText.value.trim(); if(!t) return setTip("评论内容不能为空",true);
+    cmtSend.disabled=true; setTip("发送中…");
+    try{ await post("/comment",{slug:engSlug,name:getName(),text:t});
+      cmtText.value=""; setTip("评论成功 ✦"); await loadEngage(engSlug);
+    }catch(e){ setTip("发送失败："+e.message,true); } finally{ cmtSend.disabled=false; }
+  }
+  cmtSend.addEventListener("click",sendComment);
+  cmtText.addEventListener("keydown",e=>{ if((e.metaKey||e.ctrlKey)&&e.key==="Enter") sendComment(); });
 })();

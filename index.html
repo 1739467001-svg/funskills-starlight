@@ -117,11 +117,27 @@
       <h3 id="lbTitle"></h3>
       <p class="lb-en" id="lbEn"></p>
       <p class="lb-tagline" id="lbTagline"></p>
+      <div class="lb-highlight" id="lbHighlight"></div>
       <p class="lb-blurb" id="lbBlurb"></p>
       <div class="lb-tags" id="lbTags"></div>
       <div class="lb-author" id="lbAuthor"></div>
       <div class="lb-index" id="lbIndex"></div>
       <div class="lb-qr" id="lbQr"></div>
+
+      <div class="lb-engage" id="lbEngage">
+        <div class="eng-bar">
+          <button class="like-btn" id="likeBtn" aria-label="点赞">
+            <span class="heart">♡</span><b id="likeCount">0</b>
+          </button>
+          <input class="eng-name" id="engName" placeholder="填写昵称后即可点赞评论" maxlength="24" />
+        </div>
+        <div class="cmt-form">
+          <textarea id="cmtText" rows="2" placeholder="写下你的评论…（无需注册）" maxlength="500"></textarea>
+          <button class="cmt-send" id="cmtSend">发送</button>
+        </div>
+        <div class="cmt-tip" id="cmtTip"></div>
+        <div class="cmt-list" id="cmtList"></div>
+      </div>
     </div>
   </div>
 </div>

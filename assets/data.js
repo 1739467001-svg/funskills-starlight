@@ -104,7 +104,9 @@ window.WORKS = [
 
   { slug:"ledger", title:"银砚 · 一句话记账", en:"账本留在本地", author:"冥羽", track:"效率工具",
     tagline:"一句话识别，账本就是一份 ledger.json", tags:["记账","本地","开源"],
-    blurb:"一句话即可识别并完成记账，本地优先、可靠开源、隐私安全：不自动读取支付流水、不做投资建议、不上传账本。" },
+    highlight:"全程唯一的初中生选手组合 —— 15 & 16 岁搭档，平均年龄仅 15.5 岁，用一个 Skill 证明：创造力，从不设年龄门槛。",
+    blurb:"一句话即可识别并完成记账，本地优先、可靠开源、隐私安全：不自动读取支付流水、不做投资建议、不上传账本。",
+    qr:"assets/qr/ledger.png", qrTitle:"群聊：零感无限-ZeroX 种子用户群", qrNote:"扫码加入社群 · 二维码 6 月 7 日前有效" },
 
   { slug:"hammer-notes", title:"锤子便签 && GARSS 阅读器", en:"不要因为走得太远，就忘了为什么出发", author:null, track:"效率工具",
     tagline:"致敬经典的便签与阅读体验", tags:["工具","内容","阅读"],

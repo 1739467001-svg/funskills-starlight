@@ -196,6 +196,43 @@ section{position:relative;z-index:2}
 .lb-author{margin-top:24px;font-size:14px;color:var(--faint);letter-spacing:1px}
 .lb-author b{color:var(--ink);font-weight:500}
 .lb-index{margin-top:14px;font-family:var(--display);font-size:12px;letter-spacing:2px;color:var(--accent)}
+.lb-highlight{margin-top:16px;padding:12px 16px;border-radius:12px;line-height:1.7;font-size:14px;
+  color:#fff2cf;background:linear-gradient(90deg,rgba(245,210,122,.16),rgba(245,210,122,.04));
+  border:1px solid rgba(245,210,122,.5);position:relative}
+.lb-highlight::before{content:"★ 全程亮点";display:block;font-size:11px;letter-spacing:2px;color:var(--gold);margin-bottom:6px;font-weight:700}
+
+/* 点赞 + 评论 */
+.lb-engage{margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.eng-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.like-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:30px;cursor:pointer;
+  border:1px solid var(--line);background:rgba(15,20,44,.5);color:var(--ink);font-size:15px;transition:.25s}
+.like-btn .heart{color:#ff6b8a;font-size:18px;line-height:1;transition:.25s}
+.like-btn:hover{border-color:#ff6b8a;background:rgba(255,107,138,.12)}
+.like-btn.liked{border-color:#ff6b8a;background:rgba(255,107,138,.18)}
+.like-btn.liked .heart{text-shadow:0 0 12px rgba(255,107,138,.8)}
+.like-btn.pop{animation:likepop .4s}
+@keyframes likepop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+.eng-name{flex:1;min-width:160px;padding:9px 14px;border-radius:24px;border:1px solid var(--line);
+  background:rgba(8,11,26,.6);color:var(--ink);font-size:14px;font-family:var(--sans)}
+.eng-name:focus{outline:none;border-color:var(--gold)}
+.eng-name.need{border-color:#ff6b8a;animation:likepop .4s}
+.cmt-form{display:flex;gap:10px;margin-top:14px;align-items:flex-end}
+.cmt-form textarea{flex:1;padding:10px 14px;border-radius:14px;border:1px solid var(--line);resize:vertical;
+  background:rgba(8,11,26,.6);color:var(--ink);font-size:14px;font-family:var(--sans);line-height:1.6;max-height:160px}
+.cmt-form textarea:focus{outline:none;border-color:var(--gold)}
+.cmt-send{flex:0 0 auto;padding:10px 20px;border-radius:14px;cursor:pointer;border:1px solid var(--gold);
+  background:var(--gold);color:#1a1405;font-size:14px;font-weight:700;transition:.25s}
+.cmt-send:hover{box-shadow:0 0 22px rgba(245,210,122,.5)}
+.cmt-tip{font-size:12px;color:var(--faint);margin-top:8px;min-height:16px}
+.cmt-tip.err{color:#ff8a8a}
+.cmt-list{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.cmt-item{padding:11px 14px;border-radius:12px;background:rgba(15,20,44,.45);border:1px solid var(--line)}
+.cmt-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px}
+.cmt-name{color:var(--cyan);font-size:13px;font-weight:700}
+.cmt-time{color:var(--faint);font-size:11px;flex:0 0 auto}
+.cmt-text{color:var(--ink);opacity:.9;font-size:14px;line-height:1.6;word-break:break-word;white-space:pre-wrap}
+.cmt-empty{color:var(--faint);font-size:13px;padding:6px 0}
+
 .lb-qr{margin-top:22px}
 .lb-qr-card{display:inline-block;padding:14px 14px 10px;border-radius:16px;text-align:center;
   background:rgba(255,255,255,.97);border:1px solid var(--accent);box-shadow:0 12px 40px var(--glow)}

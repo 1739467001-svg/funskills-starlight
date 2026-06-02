@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex"/>
+<title>繁星之夜 · 后台数据</title>
+<style>
+  :root{--bg:#070a18;--ink:#eaf0ff;--muted:#9aa6cf;--gold:#f5d27a;--cyan:#6fd3ff;--line:rgba(150,170,255,.16);--card:rgba(18,24,52,.6)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Noto Sans SC",system-ui,sans-serif;background:radial-gradient(1000px 600px at 80% -10%,rgba(80,60,160,.25),transparent),#05060f;color:var(--ink);padding:28px clamp(14px,4vw,48px)}
+  h1{font-size:24px;letter-spacing:1px}.sub{color:var(--muted);font-size:13px;margin-top:6px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:20px 0}
+  input{padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(8,11,26,.7);color:var(--ink);font-size:14px;min-width:240px}
+  button{padding:9px 18px;border-radius:10px;border:1px solid var(--gold);background:var(--gold);color:#1a1405;font-weight:700;cursor:pointer;font-size:14px}
+  button.ghost{background:transparent;color:var(--gold)}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0 26px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 24px;min-width:140px}
+  .stat b{display:block;font-size:32px;color:#fff}.stat span{color:var(--muted);font-size:12px;letter-spacing:2px}
+  h2{font-size:16px;margin:26px 0 10px;color:var(--gold)}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--cyan);font-weight:700;background:rgba(10,14,30,.6);position:sticky;top:0}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums}
+  .name{color:var(--cyan);font-weight:700}.work{color:var(--gold)}
+  .err{color:#ff8a8a;margin:10px 0}
+  .wrap{max-height:50vh;overflow:auto;border-radius:12px}
+  .muted{color:var(--muted)}
+</style>
+</head>
+<body>
+  <h1>✦ 繁星之夜 · 后台数据</h1>
+  <p class="sub">观众点赞 / 评论实时统计 · 仅管理员可见</p>
+  <div class="bar">
+    <input id="key" type="password" placeholder="输入后台密钥"/>
+    <button id="load">查看</button>
+    <button id="refresh" class="ghost">刷新</button>
+    <span id="status" class="muted"></span>
+  </div>
+  <div id="err" class="err"></div>
+  <div id="out" style="display:none">
+    <div class="cards">
+      <div class="stat"><b id="tLikes">0</b><span>总点赞</span></div>
+      <div class="stat"><b id="tCmts">0</b><span>总评论</span></div>
+      <div class="stat"><b id="tWorks">0</b><span>被互动作品</span></div>
+    </div>
+    <h2>按作品汇总</h2>
+    <div class="wrap"><table id="byWork"><thead><tr><th>作品</th><th>选手</th><th>点赞</th><th>评论</th></tr></thead><tbody></tbody></table></div>
+    <h2>全部点赞（谁 → 哪个作品）</h2>
+    <div class="wrap"><table id="likes"><thead><tr><th>昵称</th><th>点赞了</th><th>时间</th></tr></thead><tbody></tbody></table></div>
+    <h2>全部评论（谁 → 哪个作品）</h2>
+    <div class="wrap"><table id="cmts"><thead><tr><th>昵称</th><th>评论了</th><th>内容</th><th>时间</th></tr></thead><tbody></tbody></table></div>
+  </div>
+
+<script src="assets/data.js"></script>
+<script>
+  const $=s=>document.querySelector(s);
+  const TITLE={}, AUTHOR={};
+  (window.WORKS||[]).forEach(w=>{TITLE[w.slug]=w.title;AUTHOR[w.slug]=w.author||"—";});
+  const esc=s=>{const d=document.createElement("div");d.textContent=s==null?"":s;return d.innerHTML;};
+  const tname=s=>esc(TITLE[s]||s);
+  const tm=ts=>{const d=new Date(ts*1000),p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;};
+  const KK="fx_admin_key";
+  $("#key").value=localStorage.getItem(KK)||"";
+
+  async function load(){
+    const key=$("#key").value.trim(); if(!key){$("#err").textContent="请输入密钥";return;}
+    localStorage.setItem(KK,key); $("#err").textContent=""; $("#status").textContent="加载中…";
+    try{
+      const r=await fetch("/api/all?key="+encodeURIComponent(key),{cache:"no-store"});
+      if(r.status===403){throw new Error("密钥不正确");}
+      if(!r.ok) throw new Error("请求失败（"+r.status+"）");
+      const d=await r.json(); render(d); $("#status").textContent="更新于 "+new Date().toLocaleTimeString();
+    }catch(e){ $("#out").style.display="none"; $("#err").textContent="读取失败："+e.message+"（请在云服务器/域名站点打开本页）"; $("#status").textContent="";}
+  }
+  function render(d){
+    $("#out").style.display="block";
+    $("#tLikes").textContent=d.totals.likes; $("#tCmts").textContent=d.totals.comments;
+    $("#tWorks").textContent=Object.keys(d.by_slug||{}).length;
+    const rows=Object.entries(d.by_slug||{}).sort((a,b)=>((b[1].likes||0)+(b[1].comments||0))-((a[1].likes||0)+(a[1].comments||0)));
+    $("#byWork tbody").innerHTML=rows.map(([s,v])=>`<tr><td class="work">${tname(s)}</td><td>${esc(AUTHOR[s]||"—")}</td><td class="num">${v.likes||0}</td><td class="num">${v.comments||0}</td></tr>`).join("")||emptyRow(4);
+    $("#likes tbody").innerHTML=(d.likes||[]).map(l=>`<tr><td class="name">${esc(l.name)}</td><td class="work">${tname(l.slug)}</td><td>${tm(l.ts)}</td></tr>`).join("")||emptyRow(3);
+    $("#cmts tbody").innerHTML=(d.comments||[]).map(c=>`<tr><td class="name">${esc(c.name)}</td><td class="work">${tname(c.slug)}</td><td>${esc(c.text)}</td><td>${tm(c.ts)}</td></tr>`).join("")||emptyRow(4);
+  }
+  const emptyRow=n=>`<tr><td colspan="${n}" class="muted">暂无数据</td></tr>`;
+  $("#load").onclick=load; $("#refresh").onclick=load;
+  $("#key").addEventListener("keydown",e=>{if(e.key==="Enter")load();});
+  if($("#key").value) load();
+</script>
+</body>
+</html>
