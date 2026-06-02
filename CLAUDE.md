@@ -43,3 +43,16 @@ git push origin main      # 推送到用户自己的 GitHub 仓库
 
 ## 自适应
 已适配手机/平板/桌面;背景装饰统一在 `.bg-layer` 裁剪层内,避免横向溢出——新增固定/绝对定位的大装饰元素时注意别破坏这一点。
+
+## 缓存版本号（重要）
+`index.html` / `admin.html` 引用 `style.css?v=N` `app.js?v=N` `data.js?v=N`。
+**每次改了 css/js/data,必须把所有 `?v=N` 同步 +1**,否则用户拿到的是旧缓存。
+
+## 点赞/评论后端（仅云服务器，GitHub Pages 无后端）
+- 代码:`server/api.py`（Python 标准库 + SQLite，零依赖）；后台看板:`admin.html`。
+- 运行:systemd 服务 `funskills-api`（监听 127.0.0.1:8090），nginx 用 `location /api/` 反代。
+- 数据库:`/var/lib/funskills/engagement.db`（**在 web 根目录之外**，不可被下载）。
+- 管理员密钥:存于 `/var/lib/funskills/admin.key`，也写在 systemd 单元的 `FX_ADMIN_KEY`。
+- 后台地址:`<站点>/admin.html`，输入密钥查看「谁给谁点赞/评论」。
+- **若改了 `server/api.py`,git pull 后要 `sudo systemctl restart funskills-api`**（改前端则不用）。
+- 前端 API 基址为同源 `/api`;Pages（https）因混合内容无法调用 http 后端,会优雅降级提示"请在正式站点体验"。互动功能以服务器/域名站点为准。
