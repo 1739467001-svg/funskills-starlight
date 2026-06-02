@@ -21,19 +21,19 @@ window.WORKS = [
     tagline:"从商品信息到爆款梗片，只需三分钟", tags:["短视频","创作","电商"],
     blurb:"输入商品与目标人群，一键产出脚本、分镜、关键帧、视频 Prompt 与风险检查的五大模块完整方案。" },
 
-  { slug:"geo-checker", title:"GEO Checker", en:"Is your store AI-ready?", author:null, track:"电商出海",
-    tagline:"测一测你的店铺，AI 搜索引擎看得见吗", wechat:"迦一", tags:["出海","GEO","可见性"],
+  { slug:"geo-checker", title:"GEO Checker", en:"Is your store AI-ready?", author:"张舒", track:"电商出海",
+    tagline:"测一测你的店铺，AI 搜索引擎看得见吗", wechat:"zhangshubot", tags:["出海","GEO","可见性"],
     blurb:"扫描电商站点给出 GEO 分数，告诉你 ChatGPT、Perplexity 等 AI 搜索引擎看不见的结构化数据与可见性问题。" },
 
   { slug:"ecom-ops", title:"中国电商全链路运营系统", en:"12 大模块 · 覆盖全场景 · 数据驱动增长", author:"VON", wechat:"W18337862102", track:"电商出海",
     tagline:"一套系统打通电商运营全链路", tags:["电商","运营","系统"],
     blurb:"从标题优化、商品文案、评价管理到广告策略、供应链、合规法务，十二大核心模块覆盖电商运营全场景。" },
 
-  { slug:"ecom-arcade", title:"电商超级智能体", en:"一键开局 · 选品/视觉/上架/复盘", author:null, track:"电商出海",
+  { slug:"ecom-arcade", title:"电商超级智能体", en:"一键开局 · 选品/视觉/上架/复盘", author:"小智", track:"电商出海",
     tagline:"输入一个商品名，自动生成完整经营包", wechat:"KING_KAZMAX", tags:["电商","智能体","自动化"],
     blurb:"只需输入商品名或链接，自动生成主图、详情、短视频、上架字段与行动清单，一次完成整局开盘。" },
 
-  { slug:"product-radar", title:"新奇特选品雷达", en:"用公开信号，筛出值得首测的跨境商品", author:null, track:"电商出海",
+  { slug:"product-radar", title:"新奇特选品雷达", en:"用公开信号，筛出值得首测的跨境商品", author:"Owen", track:"电商出海",
     tagline:"TikTok Shop 跨境卖家的首发雷达", wechat:"ybelieveycanachieve", tags:["跨境","选品","TikTok"],
     blurb:"公开趋势聚合、机会评分、时效性判断、证据链核查与风险提示，帮你抢在风口前锁定值得首测的商品。" },
 
@@ -82,7 +82,7 @@ window.WORKS = [
     tagline:"少一点技能堆砌，多一点真正成长", tags:["Agent","记忆","成长"],
     blurb:"记忆沉淀、安全守护、持续执行、Workflow 与 Agent 编排，把对话沉淀为越用越有价值的数字资产。" },
 
-  { slug:"hackathon", title:"黑客松夺冠助手", en:"让 AI 成为你赢得比赛的最强队友", author:null, track:"效率工具",
+  { slug:"hackathon", title:"黑客松比赛夺冠助手", en:"让 AI 成为你赢得比赛的最强队友", author:"胡永宝", track:"效率工具",
     tagline:"一起用 AI 赢得比赛", wechat:"jsnjhyb", tags:["比赛","效率"],
     blurb:"智能节点提醒、AI 导师选题团、大咖模拟质询——从报名截止到决赛答辩，全程为你的参赛之路护航。" },
 
@@ -90,15 +90,15 @@ window.WORKS = [
     tagline:"重新定义会展生产力", wechat:"wxid_1qsyhgydofeh12", tags:["会展","增长","效率"],
     blurb:"AI 大会招商增长 Skill：以成交为导向，一键生成全案、快速复用，把传统 5 人 7 天的工作压缩到 30 分钟。" },
 
-  { slug:"hackflow-ppt", title:"HackFlow PPT", en:"一条 /ppt 命令，生成路演级 PPT", author:null, track:"效率工具",
+  { slug:"hackflow-ppt", title:"HackFlow PPT", en:"一条 /ppt 命令，生成路演级 PPT", author:"弘文", track:"效率工具",
     tagline:"让你专注作品，PPT 交给它", wechat:"a12451746", tags:["PPT","创作","开源"],
     blurb:"开源 Claude Code Skill 插件：从项目代码到 4K 输出，一条命令生成路演级演示，从代码到提案一气呵成。" },
 
-  { slug:"lumi-lab", title:"Idea 创业实验室", en:"Lumi Lab · 把一句话想法送进实验室", author:null, track:"效率工具",
+  { slug:"lumi-lab", title:"Idea 创业实验室", en:"Lumi Lab · 把一句话想法送进实验室", author:"A梦", track:"效率工具",
     tagline:"先验证，再决定要不要真去做", wechat:"zifeixu85", tags:["创业","验证","效率"],
     blurb:"看清楚、测一下、下一步——多通道验证想法、给方向与行动建议，26 个 AI Skills 陪你跑通创业第一步。" },
 
-  { slug:"info-alchemist", title:"信息炼金术士", en:"Info-Alchemist", author:null, track:"效率工具",
+  { slug:"info-alchemist", title:"信息炼金术士", en:"Info-Alchemist", author:"花生仁", track:"效率工具",
     tagline:"让搜索从“找资料”变成“判断下一步”", wechat:"shanhu52", tags:["搜索","决策","效率"],
     blurb:"明确搜索目的，把官网、新闻、小红书、X、Reddit 等信息炼成你的下一步行动：继续做、观察、小范围验证或放弃。" },
 
@@ -116,7 +116,7 @@ window.WORKS = [
     tagline:"让 AI 成为你的小红书运营超级助手", wechat:"Patience-no", tags:["小红书","自动化","内容"],
     blurb:"从搜索灵感、浏览评论到 AI 内容生成、一键发布——小红书站内运营全流程自动化。" },
 
-  { slug:"storymap", title:"StoryMap", en:"人物 · 时空 · 事件，历史足迹可视化", author:null, track:"内容创作",
+  { slug:"storymap", title:"StoryMap", en:"人物 · 时空 · 事件，历史足迹可视化", author:"崔成", track:"内容创作",
     tagline:"从空间视角读懂历史人物", wechat:"Cui_Zi_Cheng", tags:["可视化","学习","内容"],
     blurb:"提取关键地点与对应事件、精准地理编码、交互式时间轴与足迹路线——“李白的一生足迹”也能一图读懂。" },
 
@@ -140,23 +140,23 @@ window.WORKS = [
     tagline:"把你的困惑，送上法庭", tags:["决策","成长"],
     blurb:"CODEX SKILL · 6 步决策分析引擎：面临重大选择时层层审讯困惑，给出可立刻执行的 72 小时实验方案。" },
 
-  { slug:"travel-planner", title:"境旅 Travel Planner", en:"用自然语言，一键生成完整旅行方案", author:"达欢", wechat:"darren94me_", track:"生活成长",
+  { slug:"travel-planner", title:"境旅 Travel Planner", en:"用自然语言，一键生成完整旅行方案", author:"达轮", wechat:"darren94me_", track:"生活成长",
     tagline:"让每一次出行，都从灵感到出发", tags:["旅行","规划","生活"],
     blurb:"输入目的地、天数、预算与人数，自动生成景点、餐饮、路线、每日行程与预算拆分的完整 Place Guide。" },
 
-  { slug:"nut-finance", title:"坚果 · 财务规划", en:"让钱待在合适的位置", author:null, track:"生活成长",
+  { slug:"nut-finance", title:"坚果 · 财务规划", en:"让钱待在合适的位置", author:"高磊", track:"生活成长",
     tagline:"不追热点，不制造焦虑", wechat:"g_phylor", tags:["理财","规划","生活"],
     blurb:"面向理财新手：看清现金流、整理资产负债、制定极简方案、定期复盘，像松鼠存坚果一样安放自己的财产。" },
 
-  { slug:"jung", title:"问荣格", en:"10 问内，照见你此刻靠近的潜意识原型", author:null, track:"生活成长",
+  { slug:"jung", title:"问荣格", en:"10 问内，照见你此刻靠近的潜意识原型", author:"口袋君", track:"生活成长",
     tagline:"给你一个可以继续想的象征", wechat:"pocketfuns", tags:["心理","探索","生活"],
     blurb:"符号识别型体验：抽卡、对话、读片，一次通过图像、象征与追问开启的向内自我探索，结果不是标签而是象征。" },
 
-  { slug:"profiling", title:"侧写技 · 慧眼社区", en:"洞察人心，看透本质", author:null, track:"生活成长",
+  { slug:"profiling", title:"侧写技 · 慧眼社区", en:"洞察人心，看透本质", author:"土狗", track:"生活成长",
     tagline:"数据非真相，行为即密码", wechat:"LDKZKingOrKing", tags:["洞察","社区","生活"],
     blurb:"洞察人心、看透本质、掌控时机、改写结局——把每一次选择，照见背后的命运与逻辑。" },
 
-  { slug:"child-face", title:"孩子长相预测", en:"上传两张照片，解读未来七段人生", author:null, track:"生活成长",
+  { slug:"child-face", title:"孩子长相预测", en:"上传两张照片，解读未来七段人生", author:"庄工", track:"生活成长",
     tagline:"我连咱俩孩子长啥样都想好了", wechat:"JinxThePM", tags:["娱乐","AI","生活"],
     blurb:"两张照片、七个阶段、一份报告，从婴儿到老年解读未来七段人生——仅供娱乐参考，不代表真实预测。" }
 ];
