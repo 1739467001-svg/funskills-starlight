@@ -206,7 +206,7 @@
   /* ---------- 灯箱 ---------- */
   const lb=$("#lightbox"),lbImg=$("#lbImg"),lbTrack=$("#lbTrack"),lbTitle=$("#lbTitle"),
         lbEn=$("#lbEn"),lbTag=$("#lbTagline"),lbBlurb=$("#lbBlurb"),lbTags=$("#lbTags"),
-        lbAuthor=$("#lbAuthor"),lbIndex=$("#lbIndex");
+        lbAuthor=$("#lbAuthor"),lbIndex=$("#lbIndex"),lbQr=$("#lbQr");
   let lbI=0;
   function openLB(i){ lbI=i; renderLB(); lb.classList.add("open"); lb.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; stop(); }
   function closeLB(){ lb.classList.remove("open"); lb.setAttribute("aria-hidden","true"); document.body.style.overflow=""; play(); }
@@ -220,6 +220,13 @@
     lbTags.innerHTML=wk.tags.map(t=>`<span>#${t}</span>`).join("");
     lbAuthor.innerHTML=wk.author?`参赛选手 · <b>${wk.author}</b>`:`繁星之夜 · 决赛入围作品`;
     lbIndex.textContent=String(lbI+1).padStart(2,"0")+" / "+String(N).padStart(2,"0");
+    if(wk.qr){
+      lbQr.style.display="block";
+      lbQr.innerHTML=`<div class="lb-qr-card">
+        <div class="lb-qr-lead">✦ 作者社群 · 扫码加入 ✦</div>
+        <img src="${wk.qr}" alt="${wk.qrTitle||'群二维码'}">
+      </div>`;
+    } else { lbQr.style.display="none"; lbQr.innerHTML=""; }
   }
   function lbNext(){lbI=(lbI+1)%N;renderLB();}
   function lbPrev(){lbI=(lbI-1+N)%N;renderLB();}

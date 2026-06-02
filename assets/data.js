@@ -63,7 +63,8 @@ window.WORKS = [
 
   { slug:"web3quant", title:"Web3QuantMaster", en:"一人即宇宙 · AI 原生量化基础设施", author:"Freya", track:"金融投资",
     tagline:"This is not a project. This is an asset.", tags:["量化","Web3"],
-    blurb:"单人 OPC：40+ 生产级模块、5-10x 引擎提速、0ms DataStore、五级实时风控，面向高波动市场的量化 AI 助手。" },
+    blurb:"单人 OPC：40+ 生产级模块、5-10x 引擎提速、0ms DataStore、五级实时风控，面向高波动市场的量化 AI 助手。",
+    qr:"assets/qr/web3quant.png", qrTitle:"群聊：【智量奇点】AICQ Lab", qrNote:"扫码加入社群交流 · 二维码 6 月 9 日前有效" },
 
   { slug:"finance-arena", title:"金融 AI 擂台", en:"智能算法对决 · 金融未来挑战", author:"于鸿伟", track:"金融投资",
     tagline:"让算法在擂台上一较高下", tags:["金融","赛事"],
