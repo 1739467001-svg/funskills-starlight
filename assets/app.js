@@ -186,6 +186,10 @@
         <h4>${wk.title}</h4>
         <p>${wk.tagline}</p>
         ${wk.author?`<div class="sc-author">✦ ${wk.author}</div>`:""}
+        <div class="sc-stats" data-slug="${wk.slug}" style="display:none">
+          <span class="sc-stat sc-like">♥ <b>0</b></span>
+          <span class="sc-stat sc-cmt">💬 <b>0</b></span>
+        </div>
       </div>`;
     card.addEventListener("click",()=>openLB(i));
     grid.appendChild(card);
@@ -261,6 +265,7 @@
 
   function renderEngage(data){
     likeCount.textContent = data.likes||0;
+    bumpSummary(data.slug||engSlug, data.likes||0, (data.comments||[]).length);
     engLiked = !!data.liked;
     likeBtn.classList.toggle("liked", engLiked);
     likeBtn.querySelector(".heart").textContent = engLiked ? "♥" : "♡";
@@ -306,4 +311,41 @@
   }
   cmtSend.addEventListener("click",sendComment);
   cmtText.addEventListener("keydown",e=>{ if((e.metaKey||e.ctrlKey)&&e.key==="Enter") sendComment(); });
+
+  /* ---------- 数据沉淀：全站汇总（卡片角标 + 全场总计，自动刷新） ---------- */
+  let SUMMARY={};
+  const liveTotals=$("#liveTotals");
+  function bumpSummary(slug, likes, comments){
+    if(!slug) return;
+    const s=SUMMARY[slug]||(SUMMARY[slug]={likes:0,comments:0});
+    if(likes!=null) s.likes=likes;
+    if(comments!=null) s.comments=comments;
+    applySummary();
+  }
+  function applySummary(){
+    let tl=0, tc=0;
+    $$(".sc-stats").forEach(el=>{
+      const s=SUMMARY[el.dataset.slug];
+      if(s){ el.querySelector(".sc-like b").textContent=s.likes||0;
+             el.querySelector(".sc-cmt b").textContent=s.comments||0;
+             el.style.display="flex"; }
+    });
+    for(const k in SUMMARY){ tl+=SUMMARY[k].likes||0; tc+=SUMMARY[k].comments||0; }
+    if(liveTotals){
+      liveTotals.innerHTML = (tl||tc)
+        ? `✦ 全场已点亮 <b>${tl}</b> 次心动 · 收到 <b>${tc}</b> 条留言 ✦`
+        : `✦ 还没有人点亮，快来成为第一个 ✦`;
+      liveTotals.style.display="block";
+    }
+  }
+  async function loadSummary(){
+    try{
+      const r=await fetch(API+"/summary",{cache:"no-store"}); if(!r.ok) throw 0;
+      const d=await r.json(); SUMMARY=d.by_slug||{}; applySummary();
+    }catch(_){ /* Pages 无后端时静默 */ }
+  }
+  // 首次加载 + 定时刷新 + 回到前台刷新（这样别人点赞/评论后，大家都能看到变化）
+  loadSummary();
+  setInterval(loadSummary, 45000);
+  document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadSummary(); });
 })();

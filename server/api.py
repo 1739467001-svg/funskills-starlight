@@ -50,6 +50,17 @@ class H(BaseHTTPRequestHandler):
                    for r in c.execute("SELECT name,text,ts FROM comments WHERE slug=? ORDER BY id DESC LIMIT 300", (slug,))]
             c.close()
             return self._json(200, {"slug": slug, "likes": likes, "liked": liked, "comments": cms})
+        if u.path == "/api/summary":
+            c = conn()
+            by = {}
+            for r in c.execute("SELECT slug, COUNT(*) FROM likes GROUP BY slug"):
+                by.setdefault(r[0], {"likes": 0, "comments": 0})["likes"] = r[1]
+            for r in c.execute("SELECT slug, COUNT(*) FROM comments GROUP BY slug"):
+                by.setdefault(r[0], {"likes": 0, "comments": 0})["comments"] = r[1]
+            tl = c.execute("SELECT COUNT(*) FROM likes").fetchone()[0]
+            tc = c.execute("SELECT COUNT(*) FROM comments").fetchone()[0]
+            c.close()
+            return self._json(200, {"by_slug": by, "totals": {"likes": tl, "comments": tc}})
         if u.path == "/api/all":
             if (q.get("key", [""])[0]) != ADMIN:
                 return self._json(403, {"error": "forbidden"})
