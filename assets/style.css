@@ -14,7 +14,7 @@
   --display:"Orbitron","Noto Sans SC",sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   font-family:var(--sans);
   color:var(--ink);
@@ -29,13 +29,14 @@ img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 
 /* ===== 背景层 ===== */
-#starfield{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.nebula{position:fixed;border-radius:50%;filter:blur(80px);opacity:.5;z-index:0;pointer-events:none;mix-blend-mode:screen;animation:drift 28s ease-in-out infinite}
+.bg-layer{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+#starfield{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.nebula{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;z-index:0;pointer-events:none;mix-blend-mode:screen;animation:drift 28s ease-in-out infinite}
 .nebula-a{width:46vw;height:46vw;left:-8vw;top:6vh;background:radial-gradient(circle,rgba(120,90,255,.55),transparent 65%)}
 .nebula-b{width:50vw;height:50vw;right:-12vw;top:34vh;background:radial-gradient(circle,rgba(60,180,255,.45),transparent 65%);animation-delay:-9s}
 .nebula-c{width:40vw;height:40vw;left:24vw;bottom:-12vh;background:radial-gradient(circle,rgba(255,160,120,.30),transparent 65%);animation-delay:-16s}
 @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3vw,-3vh) scale(1.12)}}
-.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+.grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ===== 导航 ===== */
@@ -54,7 +55,7 @@ a{color:inherit;text-decoration:none}
 .nav-links a:hover::after{width:100%}
 
 /* ===== Hero ===== */
-.hero{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px}
+.hero{position:relative;z-index:2;overflow:hidden;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px}
 .hero-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);z-index:-1;pointer-events:none}
 .hero-rings span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid var(--line);border-radius:50%}
 .hero-rings span:nth-child(1){width:380px;height:380px;animation:pulse 6s ease-in-out infinite}
@@ -204,21 +205,84 @@ section{position:relative;z-index:2}
 .lb-prev{left:18px}.lb-next{right:18px}
 
 /* ===== 响应式 ===== */
+/* 超大屏：内容居中不过宽 */
+@media(min-width:1700px){
+  .star-grid{max-width:1480px}
+  .coverflow{max-width:1500px;margin-left:auto;margin-right:auto}
+}
+
+/* 平板 / 中屏 ≤1024 */
+@media(max-width:1024px){
+  .gallery{padding:100px 0 70px}
+  .constellation{padding:90px 0 80px}
+  .coverflow{height:52vh}
+  .star-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
+}
+
+/* 灯箱在窄屏改为上下堆叠 */
 @media(max-width:860px){
-  .nav-links{gap:14px}
-  .coverflow{height:48vh}
-  .lb-content{flex-direction:column;overflow-y:auto;align-items:flex-start}
-  .lb-figure{max-width:100%;align-self:center}
-  .lb-figure img{max-height:50vh}
-  .lb-nav{top:auto;bottom:18px;transform:none}
-  .lb-prev{left:24px}.lb-next{right:24px}
+  .lightbox{align-items:flex-start}
+  .lb-content{flex-direction:column;overflow-y:auto;align-items:center;max-height:100vh;height:100vh;padding:54px 16px 90px;width:94%;margin:0 auto}
+  .lb-figure{max-width:100%}
+  .lb-figure img{max-height:46vh}
+  .lb-info{width:100%}
+  .lb-nav{top:auto;bottom:16px;transform:none;width:48px;height:48px;font-size:24px}
+  .lb-prev{left:50%;margin-left:-58px}.lb-next{right:50%;margin-right:-58px}
+  .lb-close{top:14px;right:16px}
 }
-@media(max-width:560px){
-  .brand-text{font-size:17px}
+
+/* 大手机 / 小平板 ≤720 */
+@media(max-width:720px){
+  .nav{padding:14px 18px}
+  .nav.scrolled{padding-top:10px;padding-bottom:10px}
+  .brand-text{font-size:18px;letter-spacing:1px}
+  .brand-text small{display:none}
+  .nav-links{gap:16px}
+  .nav-links a{font-size:13px;letter-spacing:.5px;white-space:nowrap}
+  .hero{padding:104px 18px 70px}
+  .hero-eyebrow{letter-spacing:3px;font-size:10px}
+  .hero-rings span:nth-child(1){width:300px;height:300px}
+  .hero-rings span:nth-child(2){width:480px;height:480px}
+  .hero-rings span:nth-child(3){width:680px;height:680px}
+  .hero-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 34px;width:100%;max-width:360px}
+  .coverflow{height:46vh;margin-top:44px}
+  .cf-item{width:min(66vw,300px)}
+  .cf-meta{margin-top:26px;min-height:130px}
+  .cf-btn{width:44px;height:44px;font-size:22px}
+  .gallery{padding:90px 0 60px}
+  .constellation{padding:80px 0 70px}
+  .filters{gap:9px;margin-top:36px}
+  .filter{font-size:12px;padding:8px 15px;letter-spacing:1px}
+  .star-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:38px}
+  .sc-body{padding:13px}
+  .sc-body h4{font-size:15px}
+  .sc-body p{font-size:11px}
+  .about{padding:80px 16px 70px}
+  .lb-info h3{font-size:24px}
+  .lb-blurb{font-size:14px}
+}
+
+/* 小手机 ≤400 */
+@media(max-width:400px){
+  .nav{padding:12px 14px}
+  .nav-links{gap:12px}
   .nav-links a{font-size:12px}
-  .star-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
-  .hero-stats{gap:18px}
+  .hero-title{letter-spacing:2px}
+  .hero-stats{gap:22px 24px}
+  .stat b{font-size:34px}
+  .coverflow{height:44vh}
+  .star-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .sc-track{font-size:9px;padding:2px 7px}
+  .sc-num{font-size:11px}
 }
+
+/* 触摸优化：竖向滑页正常，横向交给轮播；去掉 hover 残留 */
+.coverflow{touch-action:pan-y}
+@media(hover:none){
+  .star-card:hover{transform:none}
+  .cf-btn,.lb-nav,.lb-close{backdrop-filter:none}
+}
+
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001s!important;transition-duration:.2s!important}
 }

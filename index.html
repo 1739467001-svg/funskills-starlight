@@ -12,12 +12,14 @@
 </head>
 <body>
 
-<!-- 星空画布 -->
-<canvas id="starfield"></canvas>
-<div class="nebula nebula-a"></div>
-<div class="nebula nebula-b"></div>
-<div class="nebula nebula-c"></div>
-<div class="grain"></div>
+<!-- 星空画布（统一裁剪层，避免装饰元素溢出产生横向滚动） -->
+<div class="bg-layer">
+  <canvas id="starfield"></canvas>
+  <div class="nebula nebula-a"></div>
+  <div class="nebula nebula-b"></div>
+  <div class="nebula nebula-c"></div>
+  <div class="grain"></div>
+</div>
 
 <!-- 导航 -->
 <header class="nav" id="nav">
