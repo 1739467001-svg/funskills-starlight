@@ -4,8 +4,9 @@
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s,r=document)=>r.querySelector(s);
   const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
-  const IMG = s=>`assets/works/${s}.jpg`;
-  const THUMB = s=>`assets/works/thumbs/${s}.jpg`;
+  const VER = "12"; // 图片缓存版本：替换任何海报/缩略图后 +1（与 index.html 的 ?v 保持一致）
+  const IMG = s=>`assets/works/${s}.jpg?v=${VER}`;
+  const THUMB = s=>`assets/works/thumbs/${s}.jpg?v=${VER}`;
 
   /* ---------- 星空 ---------- */
   (function starfield(){
@@ -236,7 +237,7 @@
       lbQr.style.display="block";
       lbQr.innerHTML=`<div class="lb-qr-card">
         <div class="lb-qr-lead">✦ 作者社群 · 扫码加入 ✦</div>
-        <img src="${wk.qr}" alt="${wk.qrTitle||'群二维码'}">
+        <img src="${wk.qr}?v=${VER}" alt="${wk.qrTitle||'群二维码'}">
       </div>`;
     } else { lbQr.style.display="none"; lbQr.innerHTML=""; }
   }
