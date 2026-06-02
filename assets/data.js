@@ -108,7 +108,7 @@ window.WORKS = [
     blurb:"一句话即可识别并完成记账，本地优先、可靠开源、隐私安全：不自动读取支付流水、不做投资建议、不上传账本。",
     qr:"assets/qr/ledger.png", qrTitle:"群聊：零感无限-ZeroX 种子用户群", qrNote:"扫码加入社群 · 二维码 6 月 7 日前有效" },
 
-  { slug:"hammer-notes", title:"锤子便签 && GARSS 阅读器", en:"不要因为走得太远，就忘了为什么出发", author:null, track:"效率工具",
+  { slug:"hammer-notes", title:"锤子便签 && GARSS 阅读器", en:"不要因为走得太远，就忘了为什么出发", author:"zhaoolee", track:"效率工具",
     tagline:"致敬经典的便签与阅读体验", wechat:"jianzhao111", tags:["工具","内容","阅读"],
     blurb:"把经典的锤子便签书写与 GARSS 阅读体验，用 AI Skill 的方式重新带回到你的日常工作流。" },
 
