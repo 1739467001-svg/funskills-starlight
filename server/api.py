@@ -66,7 +66,7 @@ class H(BaseHTTPRequestHandler):
                 return self._json(403, {"error": "forbidden"})
             c = conn()
             likes = [{"slug": r[0], "name": r[1], "ts": r[2]} for r in c.execute("SELECT slug,name,ts FROM likes ORDER BY ts DESC")]
-            cms = [{"slug": r[0], "name": r[1], "text": r[2], "ts": r[3]} for r in c.execute("SELECT slug,name,text,ts FROM comments ORDER BY ts DESC")]
+            cms = [{"id": r[0], "slug": r[1], "name": r[2], "text": r[3], "ts": r[4]} for r in c.execute("SELECT id,slug,name,text,ts FROM comments ORDER BY ts DESC")]
             byslug = {}
             for l in c.execute("SELECT slug, COUNT(*) FROM likes GROUP BY slug"): byslug.setdefault(l[0], {})["likes"] = l[1]
             for l in c.execute("SELECT slug, COUNT(*) FROM comments GROUP BY slug"): byslug.setdefault(l[0], {})["comments"] = l[1]
@@ -78,9 +78,35 @@ class H(BaseHTTPRequestHandler):
         ln = int(self.headers.get("Content-Length", "0") or 0)
         try: data = json.loads(self.rfile.read(ln) or b"{}")
         except Exception: data = {}
+        u = urlparse(self.path)
+        # 管理员操作：评论增删改 + 删点赞（需密钥）
+        if u.path == "/api/admin":
+            if str(data.get("key", "")) != ADMIN:
+                return self._json(403, {"error": "forbidden"})
+            act = data.get("action", "")
+            with _lock:
+                c = conn()
+                if act == "del_comment":
+                    c.execute("DELETE FROM comments WHERE id=?", (int(data.get("id", 0)),))
+                elif act == "edit_comment":
+                    t = str(data.get("text", "")).strip()[:500]
+                    if not t: c.close(); return self._json(400, {"error": "内容不能为空"})
+                    c.execute("UPDATE comments SET text=? WHERE id=?", (t, int(data.get("id", 0))))
+                elif act == "add_comment":
+                    aslug = str(data.get("slug", "")).strip()[:64]
+                    aname = (str(data.get("name", "")).strip()[:24]) or "管理员"
+                    t = str(data.get("text", "")).strip()[:500]
+                    if not aslug or not t: c.close(); return self._json(400, {"error": "需要作品和内容"})
+                    c.execute("INSERT INTO comments(slug,name,text,ts) VALUES(?,?,?,?)", (aslug, aname, t, int(time.time())))
+                elif act == "del_like":
+                    c.execute("DELETE FROM likes WHERE slug=? AND name=?", (str(data.get("slug", "")), str(data.get("name", ""))))
+                else:
+                    c.close(); return self._json(400, {"error": "未知操作"})
+                c.commit(); c.close()
+            return self._json(200, {"ok": True})
+
         name = str(data.get("name", "")).strip()[:24]
         slug = str(data.get("slug", "")).strip()[:64]
-        u = urlparse(self.path)
         if not name or not slug:
             return self._json(400, {"error": "需要昵称和作品"})
         if u.path == "/api/like":
